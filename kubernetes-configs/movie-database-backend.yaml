@@ -1,0 +1,55 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: movie-database-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-database-backend
+  template:
+    metadata:
+      labels:
+        app: movie-database-backend
+    spec:
+      containers:
+        - name: movie-database-backend
+          image: movie-database-backend:latest
+          imagePullPolicy: Never
+          env:
+            - name: REDIS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: redis-login-credentails
+                  key: endpoint
+            - name: MONGO_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: endpoint
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: password
+            - name: MONGO_DATABASE
+              value: movie-database
+
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: movie-database-backend
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: movie-database-backend

@@ -1,0 +1,17 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: endpoint
+spec:
+  rules:
+    - host: 'movie-database.pl'
+      http:
+        paths:
+          - path: /graphql
+            backend:
+              serviceName: movie-database-backend
+              servicePort: 80
+          - path: /
+            backend:
+              serviceName: movie-database-frontend
+              servicePort: 80

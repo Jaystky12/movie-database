@@ -1,0 +1,1 @@
+minikube -p movie-database stop
