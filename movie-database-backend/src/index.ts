@@ -12,7 +12,7 @@ const redis = new IoRedis(process.env.REDIS_ENDPOINT)
 redis.on('error', (err: string) => console.error('Redis:', err))
 
 const allowedOrigins = [
-  'http://localhost:8000',
+  'http://localhost:3999',
   'https://movie-database.pl',
   'http://movie-database.pl',
 ]

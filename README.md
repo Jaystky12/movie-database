@@ -1,4 +1,4 @@
-# Movie Database aka JoyJob
+# Movie Database
 
 Simple website that allows browsing / searching movie database provided by
 http://www.omdbapi.com/. Only logged in users are capable to use this feature (standard
