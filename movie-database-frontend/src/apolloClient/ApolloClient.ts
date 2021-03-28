@@ -13,7 +13,6 @@ const httpLink = new HttpLink({
 
 export default new ApolloClient({
   connectToDevTools: false,
-  // link: errorLink.concat(authLink.concat(httpLink)),
-  link: httpLink,
+  link: errorLink.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache()
 })

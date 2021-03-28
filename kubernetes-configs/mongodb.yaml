@@ -10,6 +10,15 @@ stringData:
 ---
 
 apiVersion: v1
+kind: Secret
+metadata:
+  name: authentication-secret
+stringData:
+  secret: 0960AEA9D27CD32F99226AA1AB168DFCAC5FC3C5B103A7AA25B02060DD11CCA1
+
+---
+
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongodb-scripts

@@ -23,7 +23,10 @@ spec:
                   name: redis-login-credentails
                   key: endpoint
             - name: SECRET
-              value: "0960AEA9D27CD32F99226AA1AB168DFCAC5FC3C5B103A7AA25B02060DD11CCA1"
+              valueFrom:
+                secretKeyRef:
+                  name: authentication-secret
+                  key: secret
             - name: MONGO_ENDPOINT
               valueFrom:
                 secretKeyRef:

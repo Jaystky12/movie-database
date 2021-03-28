@@ -39,7 +39,6 @@ router.post('/auth/logout',
 router.post('/auth/register',
   bodyParser.json(),
   async (req, res) => {
-  console.log(req.body)
     const { name, email, password } = req.body;
     const collection = (await mongoDatabasePromise).collection('user')
     const user = await collection.findOne({ email: email })

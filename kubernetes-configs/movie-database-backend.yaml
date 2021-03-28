@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: mongodb-login-credentails
                   key: password
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: authentication-secret
+                  key: secret
             - name: MONGO_DATABASE
               value: movie-database
 

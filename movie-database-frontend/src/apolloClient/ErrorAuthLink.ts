@@ -13,7 +13,7 @@ const promiseToObservable = (promiseFunc: any) =>
       },
       (err: any) => subscriber.error(err)
     )
-    return subscriber // this line can removed, as per next comment
+    return subscriber
   })
 
 export const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {

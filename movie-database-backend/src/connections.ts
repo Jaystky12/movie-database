@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb'
 import { ApolloServer, AuthenticationError } from 'apollo-server-express'
 import schema from './graphql/graphqlSchema'
+import { validateJwtToken } from './auth/validateJwtToken'
 
 export const mongoDatabasePromise = new MongoClient(
   '' + process.env.MONGO_ENDPOINT,
@@ -18,7 +19,13 @@ export const mongoDatabasePromise = new MongoClient(
 export const apolloServer = new ApolloServer({
   schema: schema,
   context: async (context: any) => {
-    context.timezone = 'Europe/Amsterdam'
+    const Authorization = context.req.get('authorization')
+    if (Authorization) {
+      const token = Authorization.replace('bearer ', '')
+      validateJwtToken(token)
+    } else {
+      throw new AuthenticationError('No headers provided')
+    }
     return context
   }
 })

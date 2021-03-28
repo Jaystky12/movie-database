@@ -1,6 +1,10 @@
 import { apolloServer } from './connections'
-import express from 'express'
+import connectRedis from 'connect-redis'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
 import { createServer } from 'http'
+import passport from 'passport'
+import express from 'express'
 import IoRedis from 'ioredis'
 
 const app = express()
@@ -10,6 +14,24 @@ app.set('trust proxy', 1)
 
 const redis = new IoRedis(process.env.REDIS_ENDPOINT)
 redis.on('error', (err: string) => console.error('Redis:', err))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+const RedisStore = connectRedis(session)
+
+app.use(cookieParser())
+app.use(session({
+  store: new RedisStore({ client: redis }),
+  saveUninitialized: false,
+  resave: false,
+  secret: process.env.SECRET ?? '',
+  cookie: {
+    sameSite: 'none',
+    secure: true,
+    maxAge: 2592e9 // 1month
+  }
+}))
 
 const allowedOrigins = [
   'http://localhost:3999',

@@ -50,7 +50,9 @@ class Login extends Component<ComponentPropsWithRef<any>, LoginState> {
       })
 
       if (response.ok) {
-        console.log(await response.json())
+        const body = await response.json()
+        localStorage.setItem('token', body.jwt)
+        localStorage.setItem('id', body.user._id)
         this.props.history.push("/");
       } else {
         throw new Error(String(response.status))
