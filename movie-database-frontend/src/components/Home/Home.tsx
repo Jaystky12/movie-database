@@ -13,6 +13,7 @@ interface HomeState {
   searchText: string
   movies: MovieCardState[]
   page: number
+  isAuthenticated:boolean
 }
 
 class Home extends Component<ComponentPropsWithRef<any>, HomeState> {
@@ -21,8 +22,10 @@ class Home extends Component<ComponentPropsWithRef<any>, HomeState> {
     this.state = {
       searchText: '',
       movies: [],
-      page: 1
+      page: 1,
+      isAuthenticated: props.isAuthenticated
     }
+    console.log(this.state)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.fetchMoviesFromOmdb = this.fetchMoviesFromOmdb.bind(this)
   }
@@ -73,46 +76,55 @@ class Home extends Component<ComponentPropsWithRef<any>, HomeState> {
           <h1>Movie Database</h1>
           <p className="text-muted">A simple page to browse movies from OMDB</p>
         </div>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group as={Row} controlId="searchForm">
-            <Col sm={8}>
-              <Form.Control
-                placeholder="Search movies by title"
-                autoFocus
-                style={{float: "left"}}
-                type="text"
-                value={this.state.searchText || ''}
-                onChange={(e) => this.setSearchText(e.target.value)}
-              />
-            </Col>
-            <Col sm={3}>
-              <Button type="submit" disabled={!this.validateForm()} style={{float: "left"}}>
-                Search
-              </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-        <CardColumns style={{ maxWidth: '70rem', margin: 'auto'}}>
-          {
-            this.state.movies.map(movie => {
+        { this.state.isAuthenticated ?
+          ( <>
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group as={Row} controlId="searchForm">
+                  <Col sm={8}>
+                    <Form.Control
+                      placeholder="Search movies by title"
+                      autoFocus
+                      style={{float: "left"}}
+                      type="text"
+                      value={this.state.searchText || ''}
+                      onChange={(e) => this.setSearchText(e.target.value)}
+                    />
+                  </Col>
+                  <Col sm={3}>
+                    <Button type="submit" disabled={!this.validateForm()} style={{float: "left"}}>
+                      Search
+                    </Button>
+                  </Col>
+                </Form.Group>
+              </Form>
+              <CardColumns style={{maxWidth: '70rem', margin: 'auto'}}>
+            {
+              this.state.movies.map(movie => {
               return <MovieCard key={movie.imdbID} {...movie}/>
             })
-          }
-        </CardColumns>
-        { this.state.movies.length > 0 ?
-          <div style={{margin: "0 auto", textAlign: "center"}}>
-            <Button type="submit" style={{margin: "0 auto", textAlign: "center"}} onClick={async (e) => {
+            }
+              </CardColumns>
+            {this.state.movies.length > 0 ?
+              <div style={{margin: "0 auto", textAlign: "center"}}>
+              <Button type="submit" style={{margin: "0 auto", textAlign: "center"}} onClick={async (e) => {
               const pageCounter = this.state.page + 1
               await this.setState({
-                page: pageCounter
-              })
+              page: pageCounter
+            })
               await this.fetchMoviesFromOmdb()
             }}>
               Show More
-            </Button>
-          </div>
+              </Button>
+              </div>
+              :
+              null
+            }
+          </>)
           :
-          null
+          (<div className="lander">
+            <br></br>
+            <p className="text-muted">Please login or sing up in order to access the functionality of the system </p>
+          </div>)
         }
       </div>
     )

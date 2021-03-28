@@ -46,7 +46,6 @@ app.use(cookieParser())
 
 const RedisSessiomStore = connectRedis(session)
 export const SessionStore = new RedisSessiomStore({ client: redisClient })
-console.log(process.env.SECRET)
 app.use(session({
   store: SessionStore,
   saveUninitialized: true,

@@ -8,7 +8,6 @@ export const UserSchema = new GraphQLObjectType({
     _id: { type: GraphQLID },
     name: { type: GraphQLString },
     email: { type: GraphQLString },
-    password: { type: GraphQLString },
     favouriteMovies: { type: GraphQLList(GraphQLString)  },
   })
 })
@@ -18,7 +17,6 @@ export const UserInputSchema = new GraphQLInputObjectType({
   fields: () => ({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
-    password: { type: GraphQLString },
     favouriteMovies: { type: GraphQLList(GraphQLString) },
   })
 })

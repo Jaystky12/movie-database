@@ -7,21 +7,26 @@ import User from './User/User';
 import Signup from "./Signup/Signup";
 import NotFound from "./NotFound/NotFound";
 
-export default function Routes(){
+export default function Routes(props:any){
   return(
     <Switch>
-      <Route exact path='/' >
-        <Home/>
-      </Route>
-      <Route path='/login' >
-        <Login/>
-      </Route>
-      <Route path='/user' >
-        <User/>
-      </Route>
-      <Route path='/signup' >
-        <Signup/>
-      </Route>
+      <Route exact path='/'
+      render={() =>(
+        <Home {...props} />)}
+
+      />
+      <Route path='/login'
+        render={() =>
+          <Login/>}
+      />
+      <Route path='/user'
+        render={() =>
+          <User{...props}/>}
+      />
+      <Route path='/signup'
+        render={() =>
+          <Signup/>}
+      />
       <Route>
         <NotFound />
       </Route>

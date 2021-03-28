@@ -2,6 +2,10 @@ import React, {ComponentPropsWithRef, Component} from 'react';
 import '../../styles/App.css';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import ApolloClient from "../../apolloClient/ApolloClient";
+import { omdbSearchByTitle } from "../../graphql/querries/omdbQuerries";
+import { getUser } from '../../graphql/querries/userQuerries'
+import { updateUser } from '../../graphql/mutations/userMutations'
 export interface MovieCardState {
   Title: string
   Year: string
@@ -20,6 +24,33 @@ export default class MovieCard extends Component<ComponentPropsWithRef<any>, Mov
       Type: props.Type,
       Poster: props.Poster
     }
+    this.addToFavourites =this.addToFavourites.bind(this)
+  }
+
+  async addToFavourites(){
+    try {
+      const existingUser = await ApolloClient.query({
+        query: getUser,
+        variables: {
+          id: localStorage.getItem('id'),
+        }
+      })
+      const favouriteMovies: string[] = existingUser.data.users.get.favouriteMovies
+      if(!favouriteMovies.includes(this.state.imdbID)){
+        favouriteMovies.push(this.state.imdbID)
+        await ApolloClient.mutate({
+          mutation: updateUser,
+          variables: {
+            id: localStorage.getItem('id'),
+            user: {favouriteMovies: favouriteMovies}
+          }
+        })
+      }else{
+        throw new Error('Movie already in your favourites')
+      }
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   render() {
@@ -34,7 +65,7 @@ export default class MovieCard extends Component<ComponentPropsWithRef<any>, Mov
               &nbsp;
               Type: {this.state.Type}
             </Card.Text>
-            <Button variant="info">Add to favourites</Button>
+            <Button variant="info" onClick={this.addToFavourites}>Add to favourites</Button>
           </Card.Body>
         </Card>
       </div>

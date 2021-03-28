@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/react": "^17.0.3",
     "@types/react-bootstrap": "^0.32.25",
     "@types/react-dom": "^17.0.3",
@@ -37,8 +38,9 @@
     "apollo-link-error": "^1.1.13",
     "apollo-link-http": "^1.5.17",
     "copy-webpack-plugin": "^8.1.0",
-    "graphql-tag": "^2.11.0",
     "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "jsonwebtoken": "^8.5.1",
     "react": "^16.5.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^16.5.2",

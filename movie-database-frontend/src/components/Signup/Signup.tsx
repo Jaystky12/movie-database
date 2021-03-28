@@ -69,7 +69,7 @@ class Signup extends Component<ComponentPropsWithRef<any>, SignupState> {
       })
 
       if (response.ok) {
-        console.log(await response.json())
+        this.props.history.push("/login");
       } else {
         throw new Error(String(response.status))
       }

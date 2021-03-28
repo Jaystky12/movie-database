@@ -18,7 +18,6 @@ router.post('/auth/get-token',
   bodyParser.json(),
   async (req, res) => {
     if (req.session ) {
-      console.log(req)
       res.json({ ok: true, jwt: generateJWTToken( req.sessionID || 'Not provided' , req.user || {}) })
     } else {
       res.status(401)
