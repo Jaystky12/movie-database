@@ -1,0 +1,56 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: authentication-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-service
+  template:
+    metadata:
+      labels:
+        app: authentication-service
+    spec:
+      containers:
+        - name: authentication-service
+          image: authentication-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: REDIS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: redis-login-credentails
+                  key: endpoint
+            - name: SECRET
+              value: "MY_RANDOM_TEST_SECRET_KEY"
+            - name: MONGO_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: endpoint
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-login-credentails
+                  key: password
+            - name: MONGO_DATABASE
+              value: movie-database
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: authentication-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: authentication-service

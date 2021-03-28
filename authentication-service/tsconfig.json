@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es6",
+      "es2018"
+    ],
+    "declaration": false,
+    "outDir": "build",
+    "rootDir": "src",
+    "removeComments": false,
+    "strict": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+    ],
+    "esModuleInterop": true,
+    "experimentalDecorators": true
+  }
+}
