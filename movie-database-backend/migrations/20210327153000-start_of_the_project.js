@@ -18,9 +18,8 @@ module.exports = {
 const indexesToCreate = {
   user: [
     [{ name: 'text' }, { name: 'user_name' }],
-    [{ email: 'text' }, { name: 'user_email' }],
-    [{ password: 'text' }, { name: 'user_password' }],
+    [{ email: 1 }, { name: 'user_email' }],
+    [{ password: 1 }, { name: 'user_password' }],
     [{ favouriteMovies: 1 }, { name: 'user_favouriteMovies' }],
-    [{ createdAt: 1 }, { name: 'user_createdAt' }]
   ],
 }

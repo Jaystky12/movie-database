@@ -1,4 +1,4 @@
-import React, {PureComponent, ComponentPropsWithRef} from 'react';
+import React, {Component, ComponentPropsWithRef} from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import '../../styles/Login/Login.css';
@@ -8,9 +8,9 @@ interface LoginState {
   email: string
   password: string
 }
-class Login extends PureComponent<ComponentPropsWithRef<any>, LoginState> {
+class Login extends Component<ComponentPropsWithRef<any>, LoginState> {
   constructor(props:ComponentPropsWithRef<any>) {
-    super();
+    super(props);
     this.state = {
       email: '',
       password: ''
@@ -36,7 +36,29 @@ class Login extends PureComponent<ComponentPropsWithRef<any>, LoginState> {
 
   async handleSubmit(event:any) {
     event.preventDefault();
-    this.props.history.push("/");
+
+    try {
+      const response = await fetch(`http://movie-database.pl/auth/login`, {
+        mode: 'cors',
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: this.state.email, password: this.state.password})
+      })
+
+      if (response.ok) {
+        console.log(await response.json())
+        this.props.history.push("/");
+      } else {
+        throw new Error(String(response.status))
+      }
+
+    } catch (error) {
+      console.log(error + ': Invalid email')
+    }
   }
 
   render() {

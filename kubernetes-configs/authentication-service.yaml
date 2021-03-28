@@ -15,7 +15,7 @@ spec:
       containers:
         - name: authentication-service
           image: authentication-service:latest
-          imagePullPolicy: Always
+          imagePullPolicy: Never
           env:
             - name: REDIS_ENDPOINT
               valueFrom:
@@ -23,7 +23,7 @@ spec:
                   name: redis-login-credentails
                   key: endpoint
             - name: SECRET
-              value: "MY_RANDOM_TEST_SECRET_KEY"
+              value: "0960AEA9D27CD32F99226AA1AB168DFCAC5FC3C5B103A7AA25B02060DD11CCA1"
             - name: MONGO_ENDPOINT
               valueFrom:
                 secretKeyRef:

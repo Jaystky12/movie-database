@@ -1,4 +1,4 @@
-import React, { PureComponent, ComponentProps } from 'react';
+import React, { Component, ComponentProps } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
@@ -7,10 +7,10 @@ import Nav from "react-bootstrap/Nav";
 import { AppContext } from "../lib/contextLib";
 import '../styles/App.css';
 
-class App extends PureComponent<RouteComponentProps> {
+class App extends Component<RouteComponentProps> {
 
   constructor(props:RouteComponentProps) {
-    super();
+    super(props);
     this.state = {};
     this.navigate = this.navigate.bind(this);
   }

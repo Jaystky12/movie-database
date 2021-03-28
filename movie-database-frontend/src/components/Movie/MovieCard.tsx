@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithRef, PureComponent} from 'react';
+import React, {ComponentPropsWithRef, Component} from 'react';
 import '../../styles/App.css';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -9,10 +9,10 @@ export interface MovieCardState {
   Type: string
   Poster: string
 }
-export default class MovieCard extends PureComponent<ComponentPropsWithRef<any>, MovieCardState> {
+export default class MovieCard extends Component<ComponentPropsWithRef<any>, MovieCardState> {
 
   constructor(props:ComponentPropsWithRef<any>) {
-    super();
+    super(props);
     this.state = {
       Title: props.Title,
       Year: props.Year,

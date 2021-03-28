@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithRef, PureComponent} from 'react';
+import React, {ComponentPropsWithRef, Component} from 'react';
 import '../../styles/Home/Home.css';
 import {withRouter} from "react-router";
 import Form from "react-bootstrap/Form";
@@ -15,9 +15,9 @@ interface HomeState {
   page: number
 }
 
-class Home extends PureComponent<ComponentPropsWithRef<any>, HomeState> {
+class Home extends Component<ComponentPropsWithRef<any>, HomeState> {
   constructor(props:ComponentPropsWithRef<any>) {
-    super();
+    super(props);
     this.state = {
       searchText: '',
       movies: [],
