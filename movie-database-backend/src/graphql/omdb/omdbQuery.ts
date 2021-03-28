@@ -24,7 +24,7 @@ export const OmdbQueryCtrl = new GraphQLObjectType({
         page: { type: GraphQLNonNull(GraphQLInt)}
       },
       async resolve (source, { searchString, page}) {
-        const response = await fetch(omdbUrl + `&s=${searchString}&p=${page}`)
+        const response = await fetch(omdbUrl + `&s=${searchString}&page=${page}`)
         return response.ok ? (await response.json()).Search : null
       }
     }

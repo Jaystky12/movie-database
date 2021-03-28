@@ -6,9 +6,13 @@ import Button from "react-bootstrap/Button";
 import {Row, Col} from "react-bootstrap";
 import ApolloClient from "../../apolloClient/ApolloClient";
 import { omdbSearchByTitle } from '../../graphql/querries/omdbQuerries'
+import MovieCard, { MovieCardState } from '../Movie/MovieCard'
+import CardColumns from "react-bootstrap/CardColumns";
 
 interface HomeState {
   searchText: string
+  movies: MovieCardState[]
+  page: number
 }
 
 class Home extends PureComponent<ComponentPropsWithRef<any>, HomeState> {
@@ -16,8 +20,11 @@ class Home extends PureComponent<ComponentPropsWithRef<any>, HomeState> {
     super();
     this.state = {
       searchText: '',
+      movies: [],
+      page: 1
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.fetchMoviesFromOmdb = this.fetchMoviesFromOmdb.bind(this)
   }
 
   setSearchText(text:string) {
@@ -26,23 +33,36 @@ class Home extends PureComponent<ComponentPropsWithRef<any>, HomeState> {
     })
   }
 
-
   validateForm() {
     return this.state.searchText.length > 0
   }
-
+  async fetchMoviesFromOmdb(){
+    try {
+      const searchResult = await ApolloClient.query({
+        query: omdbSearchByTitle,
+        variables: {
+          searchString: this.state.searchText,
+          page: this.state.page
+        }
+      })
+      if(searchResult.data.omdb && searchResult.data.omdb.search.length > 0){
+        const newMoviesList = [...this.state.movies, ...searchResult.data.omdb.search]
+        await this.setState({
+          movies: newMoviesList
+        })
+      }else {
+        throw new Error('No movies were found, try different title')
+      }
+    } catch (e) {
+      alert(e.message);
+    }
+  }
   async handleSubmit(event:any) {
     event.preventDefault();
-    // this.props.history.push("/");
-    const searchResult = await ApolloClient.query({
-      query: omdbSearchByTitle,
-      variables: {
-        searchString: this.state.searchText,
-        page: 1
-      }
+    await this.setState({
+      movies: []
     })
-    console.log(searchResult)
-    //TODO Send the request to the backend to get the movies
+    await this.fetchMoviesFromOmdb()
   }
 
 
@@ -72,6 +92,28 @@ class Home extends PureComponent<ComponentPropsWithRef<any>, HomeState> {
             </Col>
           </Form.Group>
         </Form>
+        <CardColumns style={{ maxWidth: '70rem', margin: 'auto'}}>
+          {
+            this.state.movies.map(movie => {
+              return <MovieCard key={movie.imdbID} {...movie}/>
+            })
+          }
+        </CardColumns>
+        { this.state.movies.length > 0 ?
+          <div style={{margin: "0 auto", textAlign: "center"}}>
+            <Button type="submit" style={{margin: "0 auto", textAlign: "center"}} onClick={async (e) => {
+              const pageCounter = this.state.page + 1
+              await this.setState({
+                page: pageCounter
+              })
+              await this.fetchMoviesFromOmdb()
+            }}>
+              Show More
+            </Button>
+          </div>
+          :
+          null
+        }
       </div>
     )
   }

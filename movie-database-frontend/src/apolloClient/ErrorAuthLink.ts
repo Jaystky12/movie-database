@@ -22,7 +22,6 @@ export const errorLink = onError(({ graphQLErrors, networkError, operation, forw
       switch (err.extensions.code) {
         case 'UNAUTHENTICATED':
           return promiseToObservable(getNewToken()).flatMap((token: string) => {
-            console.log(token)
             localStorage.setItem('token', token)
             const oldHeaders = operation.getContext().headers
             operation.setContext({
