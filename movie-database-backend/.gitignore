@@ -1,4 +1,4 @@
 .idea
-node_modules
+../movie-database-backend/node_modules
 build
 id_ed25519
