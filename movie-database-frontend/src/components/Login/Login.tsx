@@ -1,24 +1,21 @@
-import React, {PureComponent, useState, ComponentPropsWithRef} from 'react';
+import React, {PureComponent, ComponentPropsWithRef} from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import '../../styles/App.css';
-import {RouteComponentProps} from "react-router-dom";
+import '../../styles/Login/Login.css';
+import { withRouter } from "react-router";
 
 interface LoginState {
   email: string
   password: string
 }
-export default class Login extends PureComponent<ComponentPropsWithRef<any>, LoginState> {
-
-  email: any = ''
-  password: any = ''
-
-  constructor(props:RouteComponentProps) {
+class Login extends PureComponent<ComponentPropsWithRef<any>, LoginState> {
+  constructor(props:ComponentPropsWithRef<any>) {
     super();
     this.state = {
       email: '',
       password: ''
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   setEmail(email:string) {
@@ -37,8 +34,9 @@ export default class Login extends PureComponent<ComponentPropsWithRef<any>, Log
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
-  handleSubmit(event:any) {
+  async handleSubmit(event:any) {
     event.preventDefault();
+    this.props.history.push("/");
   }
 
   render() {
@@ -70,3 +68,5 @@ export default class Login extends PureComponent<ComponentPropsWithRef<any>, Log
     );
   }
 }
+
+export default withRouter(Login);

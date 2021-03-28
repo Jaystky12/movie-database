@@ -4,6 +4,7 @@ import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { AppContext } from "../lib/contextLib";
 import '../styles/App.css';
 
 class App extends PureComponent<RouteComponentProps> {
@@ -38,7 +39,9 @@ class App extends PureComponent<RouteComponentProps> {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Routes/>
+        {/*<AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>*/}
+          <Routes/>
+        {/*</AppContext.Provider>*/}
       </div>
     )
   }

@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './Home/Home';
 import Login from './Login/Login';
 import User from './User/User';
-import Signup from "./Signup/Login";
+import Signup from "./Signup/Signup";
 import NotFound from "./NotFound/NotFound";
 
 export default function Routes(){
@@ -13,13 +13,13 @@ export default function Routes(){
       <Route exact path='/' >
         <Home/>
       </Route>
-      <Route exact path='/login' >
+      <Route path='/login' >
         <Login/>
       </Route>
-      <Route exact path='/user' >
+      <Route path='/user' >
         <User/>
       </Route>
-      <Route exact path='/signup' >
+      <Route path='/signup' >
         <Signup/>
       </Route>
       <Route>
