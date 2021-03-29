@@ -60,7 +60,7 @@ class Login extends Component<ComponentPropsWithRef<any>, LoginState> {
       }
 
     } catch (error) {
-      console.log(error + ': Invalid email')
+      alert('Invalid email or password');
     }
   }
 

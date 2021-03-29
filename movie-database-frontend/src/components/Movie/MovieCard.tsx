@@ -49,7 +49,7 @@ export default class MovieCard extends Component<ComponentPropsWithRef<any>, Mov
         throw new Error('Movie already in your favourites')
       }
     } catch (e) {
-      alert(e.message);
+      alert('Email already in use');
     }
   }
 

@@ -12,7 +12,7 @@ helm repo update
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.3/cert-manager.yaml
 helm install kubed appscode/kubed --version v0.12.0 --namespace kube-system
 
-sleep 20
+sleep 60
 
 #apply ssl
 cd "$DIR/certs"
