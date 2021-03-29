@@ -31,6 +31,14 @@ To install on Ubuntu
 sudo apt install docker.io
 ```
 
+#### Helm
+[Helm](https://helm.sh/)
+To install on Ubuntu
+```
+sudo snap install helm --classic
+```
+
+
 #### Kubectl
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 To install on Ubuntu
@@ -47,6 +55,14 @@ sudo apt-get install apt-transport-https
 wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube-linux-amd64
 sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+```
+
+#### CertUtil
+**This should only be required for Linux**
+
+To install on Ubuntu
+```
+sudo apt install libnss3-tools
 ```
 
 ## Installation and running
