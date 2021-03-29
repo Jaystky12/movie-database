@@ -84,7 +84,7 @@ class Signup extends Component<ComponentPropsWithRef<any>, SignupState> {
       <div className="Signup">
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="name" >
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               autoFocus
               type="text"

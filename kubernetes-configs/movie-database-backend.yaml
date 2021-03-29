@@ -37,6 +37,16 @@ spec:
                 secretKeyRef:
                   name: mongodb-login-credentails
                   key: password
+            - name: TLS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: movie-database-tls
+                  key: tls.key
+            - name: TLS_CRT
+              valueFrom:
+                secretKeyRef:
+                  name: movie-database-tls
+                  key: tls.crt
             - name: SECRET
               valueFrom:
                 secretKeyRef:

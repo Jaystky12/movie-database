@@ -27,6 +27,16 @@ spec:
                 secretKeyRef:
                   name: authentication-secret
                   key: secret
+            - name: TLS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: movie-database-tls
+                  key: tls.key
+            - name: TLS_CRT
+              valueFrom:
+                secretKeyRef:
+                  name: movie-database-tls
+                  key: tls.crt
             - name: MONGO_ENDPOINT
               valueFrom:
                 secretKeyRef:

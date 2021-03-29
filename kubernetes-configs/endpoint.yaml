@@ -3,8 +3,12 @@ apiVersion: networking.k8s.io/v1beta1
 metadata:
   name: endpoint
 spec:
+  tls:
+    - secretName: movie-database-tls
+      hosts:
+        - movie-database.pl
   rules:
-    - host: 'movie-database.pl'
+    - host: movie-database.pl
       http:
         paths:
           - path: /graphql

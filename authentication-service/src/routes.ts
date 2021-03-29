@@ -50,4 +50,16 @@ router.post('/auth/register',
     }
 })
 
+router.get('/auth/facebook',
+  bodyParser.json(),
+  passport.authenticate('facebook'),
+  (req, res) => {
+    res.json({ ok: true, user: req.user, jwt: generateJWTToken(req.sessionID, req.user || {}) })
+  }
+);
+
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+    failureRedirect: '/login' }));
+
 export default router
